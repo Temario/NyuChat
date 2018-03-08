@@ -18,6 +18,11 @@ exit = False
 
 print("!q : salir")
 
+def fichero(msg2):
+	reg=open("log.txt","a")
+	reg.write(msg2+'\n')
+	reg.close()
+	
 def serverthread():
 	while not exit:
 		try:
@@ -40,7 +45,9 @@ while not exit:
 			exit = True
 		msg2= '['+time.strftime("%H:%M:%S")+']'+user+': '+msg
 		server.send(msg2.encode("utf-8"))
-		print('['+time.strftime("%H:%M:%S")+']My: '+msg)
+		line=('['+time.strftime("%H:%M:%S")+']My: '+msg)
+		print(line)
+		fichero(msg2)
 	except(KeyboardInterrupt, SystemExit):
 		stopandquit()
 
