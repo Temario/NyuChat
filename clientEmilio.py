@@ -63,7 +63,10 @@ def serverthread():
 
 # Crea el socket TCP servidor e intenta conectar con el mismo.
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.connect((ip, port))
+try:
+	server.connect((ip, port))
+except(ConnectionRefusedError):
+	helpmsg("Error: El servido ha rechazado la conexión.")
 
 # Empieza el hilo de escucha del servidor.
 threading.Thread(target=serverthread).start()
