@@ -66,7 +66,7 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
 	server.connect((ip, port))
 except(ConnectionRefusedError):
-	helpmsg("Error: El servido ha rechazado la conexión.")
+	helpmsg("Error: El servidor ha rechazado la conexión.")
 
 # Empieza el hilo de escucha del servidor.
 threading.Thread(target=serverthread).start()
