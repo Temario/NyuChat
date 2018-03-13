@@ -96,7 +96,7 @@ def serverthread():
             conn, addr = server.accept()
             clients.append(conn)
             msg_send = time.strftime("%H:%M:%S")+" - ["+addr[0]+"] se ha conectado -"
-            print()
+            print(msg_send)
             fichero(msg_send)
             threading.Thread(target=clientthread, args=(conn, addr)).start()
         except:
@@ -123,6 +123,17 @@ while not exit:
                 c.close()
                 clients.remove(c)
             server.close()
+        elif msg.split(" ")[0] == "ban":
+            for c in clients:
+                recogerip = str(c.getpeername()).split("'")[1]
+                if recogerip == msg.split(" ")[1]:
+                    c.send((time.strftime("%H:%M:%S ")+" Has sido baneado del servidor. ").encode("utf-8"))
+                    c.close()
+                    remove(c)
+                    msg_send = time.strftime("%H:%M:%S ")+ recogerip + " fue baneado"
+                    print(msg_send)
+                    fichero(msg_send)
+                    broadcast(msg_send.encode("utf-8"), None)
         else:
             msg_send =time.strftime("%H:%M:%S")+" [Servidor]: "+msg
             fichero(msg_send)
